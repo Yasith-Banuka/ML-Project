@@ -33,7 +33,7 @@ Upon performing an analysis on the dataset, the following characteristics on the
 __Correlation__
 <br/><br/>
 
-![alt text](/images/Correlation.jpg)
+![alt text](https://github.com/Yasith-Banuka/ML-Project/blob/main/Images/Correlation.JPG)
 
 As expected, all the location features are correlated. So are the 7 sets of similar features.
 <br/><br/>
