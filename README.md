@@ -1,3 +1,5 @@
+https://github.com/Yasith-Banuka/ML-Project
+<br/><br/>
 # ML Project - "Pump-It-up" <br/>
 
 ## Exploratory Analysis<br/><br/>
@@ -18,7 +20,7 @@ Upon performing an analysis on the dataset, the following characteristics on the
 
 * gps_height - contains negative entries (which is impossible i.e. errornous data). Also contains many zeroes
 
-* Following sets of features refer to the same detail, and is identical in most rows. The cardinality is slightly different in each feature
+* Following 7 sets of features refer to the same detail, and is identical in most rows. The cardinality is slightly different in each feature
     * Scheme_management | management | management_group
     * Extraction_type | extraction_type_group | extraction_type_class
     * Payment | payment_type
@@ -26,6 +28,55 @@ Upon performing an analysis on the dataset, the following characteristics on the
     * Quantity | quantity_group
     * Source | source_type | source_class
     * Waterpoint_type | waterpoint_type_group
+<br/><br/>
+
+__Correlation__
+<br/><br/>
+
+![alt text](/images/Correlation.jpg)
+
+As expected, all the location features are correlated. So are the 7 sets of similar features.
+<br/><br/>
+
+## Feature Selection<br/><br/>
+
+Following features were selected based on initial analysis
+
+* amount_tsh
+* funder
+* longitude
+* latitude
+* Basin
+* Subvillage
+* Region_code
+* district_code
+* lga
+* ward
+* population
+* public_meeting
+* permit
+* extraction_type_group
+* payment
+* quality_group
+* quantity
+* source_class
+* waterpoint_type_group
+* management
+* source_management
+* construction_year
+
+Following features were removed
+
+* date_recorded - no useful information
+* installer - similar to funder
+* wpt_name - High cardinality and missing values
+* num_private - no information
+* region - similar to region_code
+* recorded_by - no information
+* scheme_name - missing values
+
+One feature from each of the 7 groups of features mentioned in the earlier section was picked considering cardinality and target rellevence.
+
 <br/><br/>
 
 ## Feature Engineering<br/><br/>
@@ -52,12 +103,12 @@ __gps_height__
 
 
 __Construction year__
-
+* removed all erronous entries containing 0
 * Created a new feature called 'age'
-* The age of the entry in 2013 is recorded in this feature
+* The age of the record in 2013 is recorded in this feature (age = 2013 - construction_year.year)
 
 __Permit | Public meeting__
-* Encoded with boolean 0 and 1
+* Encoded with 0 and 1 for False and True respectively.
 <br/><br/>
 ## Handling missing values<br/><br/>
 
@@ -67,7 +118,103 @@ Numerical | age<br/> longitude<br/>gps_height|mean
 Boolean | public_meeting<br/>permit | mode
 Categorical | management_cross<br/>subvillage | 'nan' category
 
+<br/><br/>
+## Catboost<br/><br/>
 
+Multiple algorithms were tested for the problem, and catboost performed best among them. Due to the high number of categorical features in the dataset, catboost is a great algorithm to use (catboost has many features to support categorical features). It also helps with many other aspects in the pipeline.
+<br/><br/>
+
+__Encoding__
+ 
+Catboost has its own target encoder which is ideal for classification. Since all the categorical features are nominal and of high cardinality, this is the best method.
+<br/><br/>
+__Regularization__ 
+
+Catboost performs L2 regularization on its models, which is also optimized in hyperparameter tuning.
+<br/><br/>
+__Hyperparameter tuning__
+
+Done using HypoerOpt. The most important parameters were choen to be optimized. Features selected for tuning are:
+* learning rate
+* depth of tree
+* subsampling rate for bagging
+* model size regularization
+* feature combination
+<br/><br/>
+
+__Cross-validation__
+
+A 6-fold cross validation is done using catboost's in-build cross-validation functionality.
+<br/><br/><br/>
+
+
+## Post-Processing
+<br/><br/>
+
+__Feature Importance__
+<br/>
+
+feature | feature Importance
+--------------|------------------
+quantity|35.494263
+waterpoint_type_group|22.619132
+ward|19.299193
+lga|15.545347
+extraction_type_group|3.930602
+payment|2.698304
+age|0.207756
+funder|0.205402
+source_class|0.000000
+quality_group|0.000000
+amount_tsh|0.000000
+public_meeting|0.000000
+district_code|0.000000
+basin|0.000000
+latitude|0.000000
+longitude|0.000000
+gps_height|0.000000
+population|0.000000
+<br/><br/>
+
+__SHAP Values__
+<br/><br/>
+
+![alt text](/images/shap.jpg)
+
+<br/><br/>
+Following features were found to be less important by the above diagrams, and thus removed from training
+
+* population
+* gps_height
+* longitude
+* latitude
+* basin
+* subvillage
+* region_code
+* permit
+* public_meeting
+* district_code
+
+<br/><br/>
+
+## Competition submission
+<br/><br/>
+![alt text](/images/submission.png)
+
+<br/><br/>
+
+## References
+
+Following resources were used in building this solution.
+<br/><br/>
+
+https://towardsdatascience.com/pump-it-up-with-catboost-828bf9eaac68
+
+https://github.com/catboost/tutorials
+
+
+
+ 
 
 
  
