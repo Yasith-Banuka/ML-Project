@@ -179,7 +179,7 @@ population|0.000000
 __SHAP Values__
 <br/><br/>
 
-![alt text](/images/shap.jpg)
+![alt text](https://github.com/Yasith-Banuka/ML-Project/blob/main/Images/shap.JPG)
 
 <br/><br/>
 Following features were found to be less important by the above diagrams, and thus removed from training
@@ -199,7 +199,7 @@ Following features were found to be less important by the above diagrams, and th
 
 ## Competition submission
 <br/><br/>
-![alt text](/images/submission.png)
+![alt text](https://github.com/Yasith-Banuka/ML-Project/blob/main/Images/submission.png)
 
 <br/><br/>
 
