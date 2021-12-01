@@ -5,7 +5,7 @@ https://github.com/Yasith-Banuka/ML-Project
 ## Exploratory Analysis<br/><br/>
 Upon performing an analysis on the dataset, the following characteristics on the features were found.
 
-* Amount_tsh - Contains a large number of zeroes. Erronous, actual data, or a combination.
+* Amount_tsh - Contains a large number of zeroes. erroneous, actual data, or a combination.
 
 * Wpt-name - Extremely high cardinality. 
 
@@ -13,12 +13,12 @@ Upon performing an analysis on the dataset, the following characteristics on the
 
 * recorded by - same value throughout
 
-* Funder | installer - Entries are common in most records. Many errornous entries resulting in high cardinality. Many missing values
+* Funder | installer - Entries are common in most records. Many erroneous entries resulting in high cardinality. Many missing values
 
 * Basin | subvillage | region | region_code | district_code | longitude | latitude - Location-based features. Some are of high cardinality. 
-    * Longitude - has errornous zeroes.
+    * Longitude - has erroneous zeroes.
 
-* gps_height - contains negative entries (which is impossible i.e. errornous data). Also contains many zeroes
+* gps_height - contains negative entries (which is impossible i.e. erroneous data). Also contains many zeroes
 
 * Following 7 sets of features refer to the same detail, and is identical in most rows. The cardinality is slightly different in each feature
     * Scheme_management | management | management_group
